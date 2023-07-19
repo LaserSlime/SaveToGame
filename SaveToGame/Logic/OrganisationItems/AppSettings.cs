@@ -6,7 +6,7 @@ namespace SaveToGameWpf.Logic.OrganisationItems
 {
     public class AppSettings : SettingsModel, IAppSettings
     {
-        public virtual string Language { get; set; } = "RU";
+        public virtual string Language { get; set; } = "EN";
 
         public virtual BackupType BackupType { get; set; } = BackupType.Titanium;
 
