@@ -282,7 +282,7 @@ namespace SaveToGameWpf.Windows
                 _taskBarManager.SetProgress(percentage);
             }
 
-            #region Инициализация
+            #region Initialization
 
             SetStep(1, MainResources.StepInitializing);
             _visualProgress.ShowIndeterminateLabel();
@@ -317,13 +317,13 @@ namespace SaveToGameWpf.Windows
 
             #endregion
 
-            #region Изменение apk
+            #region Change apk
 
             using (var tempApk = ATempUtils.UseTempFile(tempFileProvider))
             {
                 File.Copy(sourceApkPath, tempApk.TempFile, true);
 
-                #region Добавление данных
+                #region Add data
 
                 SetStep(2, MainResources.StepAddingData);
 
@@ -467,7 +467,7 @@ namespace SaveToGameWpf.Windows
 
                 #endregion
 
-                #region Подпись
+                #region Sign apk
 
                 SetStep(3, MainResources.StepSigning);
 

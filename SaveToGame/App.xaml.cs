@@ -47,7 +47,7 @@ namespace SaveToGameWpf
 #if !DEBUG
             DispatcherUnhandledException += (sender, args) =>
             {
-                MessBox.ShowDial("Обнаружена непредвиденная ошибка. Текст ошибки скопирован в буфер обмена. Пожалуйста, свяжитесь с разработчиком");
+                MessBox.ShowDial("An unexpected error has encountered. The error has been copied to the clipboard. Please contact the developer.");
                 Clipboard.SetText("Message: " + args.Exception.Message + "\nStackTrace: " + args.Exception.StackTrace);
                 args.Handled = true;
 
