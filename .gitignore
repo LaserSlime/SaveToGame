@@ -258,5 +258,8 @@ paket-files/
 __pycache__/
 *.pyc
 
+# Other
+CI/Building/
+
 # VSCode 
 .vscode/
