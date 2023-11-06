@@ -63,7 +63,8 @@ namespace SaveToGameWpf.Logic.Utils
             byte[] key,
             bool addSave,
             string message,
-            int messagesCount
+            int messagesCount,
+            bool encryptStrings
         )
         {
             Guard.NotNullArgument(filePath, nameof(filePath));
@@ -127,8 +128,7 @@ namespace SaveToGameWpf.Logic.Utils
 
                 var dict = new Dictionary<string, SmaliMethod>();
 
-                //int messagesLength = cls.Methods.Sum(method => SmaliStringEncryptor.EncryptMethod(method, cls.Name, dict));
-                int messagesLength = cls.Methods.Count;
+                int messagesLength = encryptStrings ? cls.Methods.Sum(method => SmaliStringEncryptor.EncryptMethod(method, cls.Name, dict)) : cls.Methods.Count;
 
                 foreach (var elem in dict)
                     cls.Methods.Add(elem.Value);

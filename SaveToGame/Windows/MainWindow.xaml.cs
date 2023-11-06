@@ -438,7 +438,8 @@ namespace SaveToGameWpf.Windows
                             key: aes.Key,
                             addSave: backupFilesAdded,
                             message: needMessage ? popupText : string.Empty,
-                            messagesCount: needMessage ? messagesCount : 0
+                            messagesCount: needMessage ? messagesCount : 0,
+                            encryptStrings: _settings.StringEncryption
                         );
 
                         manifest.MainSmaliFile.AddTextToMethod(FileResources.MainSmaliCall);
