@@ -19,5 +19,11 @@ namespace SaveToGameWpf.Logic.OrganisationItems
         public virtual bool Notifications { get; set; } = true;
 
         public virtual int Version { get; set; } = GlobalVariables.LatestSettingsVersion;
+
+        public virtual bool StringEncryption { get; set; } = true;
+
+        public virtual string ModName { get; set; } = "CoolMod";
+
+        public virtual string ModVersion { get; set; } = "1.0";
     }
 }

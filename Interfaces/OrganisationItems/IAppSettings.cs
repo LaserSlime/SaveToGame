@@ -18,5 +18,11 @@ namespace Interfaces.OrganisationItems
         bool Notifications { get; set; }
 
         int Version { get; set; }
+
+        bool StringEncryption { get; set; }
+
+        string ModName { get; set; }
+
+        string ModVersion { get; set; }
     }
 }

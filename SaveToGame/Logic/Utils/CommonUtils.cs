@@ -131,7 +131,8 @@ namespace SaveToGameWpf.Logic.Utils
 
                 var dict = new Dictionary<string, SmaliMethod>();
 
-                int messagesLength = cls.Methods.Sum(method => SmaliStringEncryptor.EncryptMethod(method, cls.Name, dict));
+                //int messagesLength = cls.Methods.Sum(method => SmaliStringEncryptor.EncryptMethod(method, cls.Name, dict));
+                int messagesLength = cls.Methods.Count;
 
                 foreach (var elem in dict)
                     cls.Methods.Add(elem.Value);

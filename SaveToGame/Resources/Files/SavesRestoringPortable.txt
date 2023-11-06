@@ -143,7 +143,7 @@
 
     move-result-object v12
 
-    const-string v13, "notfirst"
+    const-string v13, "[(mod_id)]"
 
     const/4 v14, 0x0
 
@@ -169,7 +169,7 @@
 
     move-result-object v12
 
-    const-string v13, "notfirst"
+    const-string v13, "[(mod_id)]"
 
     const/4 v14, 0x1
 
