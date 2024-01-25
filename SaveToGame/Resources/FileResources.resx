@@ -122,7 +122,7 @@
     <value>Files\DataRestoreCall.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="MainSmaliCall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Files\MainSmaliCall.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>Files\MainSmaliCall.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="MessageShow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Files\MessageShow.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>

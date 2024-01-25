@@ -1,4 +1,4 @@
-﻿	const-string v0, "[(message)]"
+	const-string v0, "[(message)]"
 
 	const/4 v1, 0x1
 
