@@ -20,10 +20,10 @@ namespace SaveToGameWpf.Logic.OrganisationItems
 
         public virtual int Version { get; set; } = GlobalVariables.LatestSettingsVersion;
 
-        public virtual bool StringEncryption { get; set; } = true;
+        public virtual string ModId { get; set; } = "CoolMod";
 
-        public virtual string ModName { get; set; } = "CoolMod";
+        public virtual int ModVersion { get; set; } = 1;
 
-        public virtual string ModVersion { get; set; } = "1.0";
+        public virtual bool OverwriteLegacy { get; set; } = true;
     }
 }

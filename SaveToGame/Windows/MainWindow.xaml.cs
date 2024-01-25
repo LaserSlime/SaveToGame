@@ -70,6 +70,11 @@ namespace SaveToGameWpf.Windows
             Provider<IApktool> apktoolProvider
         )
         {
+            //TODO we should use the c# property thingies for this.
+            if (appSettings.ModId.IsNullOrEmpty())
+                appSettings.ModId = "CoolMod";
+            if(appSettings.ModVersion < 1)
+                appSettings.ModVersion = 1;
             _settings = appSettings;
             _applicationUtils = applicationUtils;
             _mainWindowProvider = mainWindowProvider;
@@ -439,7 +444,10 @@ namespace SaveToGameWpf.Windows
                             addSave: backupFilesAdded,
                             message: needMessage ? popupText : string.Empty,
                             messagesCount: needMessage ? messagesCount : 0,
-                            encryptStrings: _settings.StringEncryption
+                            modid: _settings.ModId,
+                            overwriteExisting: false,
+                            overwriteLegacy: _settings.OverwriteLegacy,
+                            version: _settings.ModVersion
                         );
 
                         manifest.MainSmaliFile.AddTextToMethod(FileResources.MainSmaliCall);

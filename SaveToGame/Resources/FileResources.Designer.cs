@@ -98,38 +98,19 @@ namespace SaveToGameWpf.Resources {
                 return ResourceManager.GetString("MessageShow", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .class public final Lcom/savegame/SavesRestoringPortable;
-        ///.super Landroid/app/Activity;
-        ///.source &quot;SavesRestoringPortable.java&quot;
-        ///
-        ///
-        ///# static fields
-        ///.field private static PdsjdolaSd:I
-        ///
-        ///.field private static daDakdsIID:I
-        ///
-        ///
-        ///# direct methods
-        ///.method static constructor &lt;clinit&gt;()V
-        ///    .locals 1
-        ///
-        ///    .prologue
-        ///    const/4 v0, 0x0
-        ///
-        ///    sput v0, Lcom/savegame/SavesRestoringPortable;-&gt;PdsjdolaSd:I
-        ///
-        ///	const/16 v0, 0x[(message_length)]
-        ///	
-        ///    sput v0, Lcom/savegame/SavesRestoringPortable;-&gt;daDakdsIID:I [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string SavesRestoring_new {
+
+        internal static string LegacyModCheck {
             get {
-                return ResourceManager.GetString("SavesRestoring_new", resourceCulture);
+                return ResourceManager.GetString("LegacyModCheck", resourceCulture);
             }
         }
-        
+
+        internal static string ModCheck {
+            get {
+                return ResourceManager.GetString("ModCheck", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to .class public final Lcom/savegame/SavesRestoringPortable;
         ///.super Landroid/app/Activity;
@@ -153,42 +134,12 @@ namespace SaveToGameWpf.Resources {
         ///
         ///	const/16 v0, 0x[(message_length)]
         ///
-        ///    sput v0, Lcom/savegame/SavesRestoringPortable;-&gt;daDakdsIID:I        /// [rest of string was truncated]&quot;;.
+        ///    sput v0, Lcom/savegame/SavesRestoringPortable;-&gt;daDakdsIID:I
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SavesRestoringPortable {
             get {
                 return ResourceManager.GetString("SavesRestoringPortable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .class public final Lcom/savegame/SavesRestoringPortable;
-        ///.super Landroid/app/Activity;
-        ///.source &quot;SavesRestoringPortable.java&quot;
-        ///
-        ///
-        ///# static fields
-        ///.field private static PdsjdolaSd:I
-        ///
-        ///.field private static daDakdsIID:I
-        ///
-        ///
-        ///# direct methods
-        ///.method static constructor &lt;clinit&gt;()V
-        ///    .locals 1
-        ///
-        ///    .prologue
-        ///    const/4 v0, 0x0
-        ///
-        ///    sput v0, Lcom/savegame/SavesRestoringPortable;-&gt;PdsjdolaSd:I
-        ///
-        ///	const/16 v0, 0x[(message_length)]
-        ///
-        ///    sput v0, Lcom/savegame/SavesRestoringPortable;-&gt;daDakdsIID:I        /// [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string SavesRestoringPortable___Backup {
-            get {
-                return ResourceManager.GetString("SavesRestoringPortable___Backup", resourceCulture);
             }
         }
     }

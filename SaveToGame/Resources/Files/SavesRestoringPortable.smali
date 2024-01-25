@@ -3,24 +3,11 @@
 .source "SavesRestoringPortable.java"
 
 
-# static fields
-.field private static PdsjdolaSd:I
-
-.field private static daDakdsIID:I
-
-
 # direct methods
 .method static constructor <clinit>()V
-    .locals 1
+    .locals 0
 
     .prologue
-    const/4 v0, 0x0
-
-    sput v0, Lcom/savegame/SavesRestoringPortable;->PdsjdolaSd:I
-
-	const/16 v0, 0x[(message_length)]
-
-    sput v0, Lcom/savegame/SavesRestoringPortable;->daDakdsIID:I
 
     return-void
 .end method
@@ -35,15 +22,13 @@
 .end method
 
 .method public static DoSmth(Landroid/content/Context;)V
-    .locals 3
+    .locals 6
     .param p0, "c"    # Landroid/content/Context;
 
     .prologue
     const/4 v1, 0x3
 
     :try_start_0
-    invoke-static {p0, v1}, Lcom/savegame/SavesRestoringPortable;->wPdauIdcaW(Landroid/content/Context;I)V
-
     invoke-virtual {p0}, Landroid/content/Context;->getAssets()Landroid/content/res/AssetManager;
 
     move-result-object v1
@@ -53,6 +38,38 @@
     move-result-object v2
 
     [(data_restore_call)]
+
+    const-string v3, "installedmods"
+
+    const/4 v4, 0x0
+
+    invoke-virtual {p0, v3, v4}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v3
+
+    const-string v4, "current"
+
+    const-string v5, ""
+
+    invoke-interface {v3, v4, v5}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v3
+
+    const-string v4, "[(mod_id)]"
+
+    invoke-virtual {v3, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_5
+
+    invoke-static {p0}, Lcom/savegame/SavesRestoringPortable;->wPdauIdcaW(Landroid/content/Context;)V
+
+    goto :goto_0
+
+    :cond_5
+    [(error_message_show)]
+
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -135,7 +152,12 @@
     .end annotation
 
     .prologue
-    const-string v12, "savegame"
+    [(legacy_mod_check)]
+
+    :cond_0
+    [(mod_check)]
+
+    const-string v12, "installedmods"
 
     const/4 v13, 0x0
 
@@ -143,21 +165,47 @@
 
     move-result-object v12
 
+    const-string v13, "current"
+
+    const-string v14, ""
+
+    invoke-interface {v12, v13, v14}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v12
+
     const-string v13, "[(mod_id)]"
+
+    invoke-virtual {v12, v13}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v13
+
+    if-nez v13, :cond_6
+
+    goto :goto_0
+
+    :cond_6
+    const-string v12, "[(mod_id)]"
 
     const/4 v14, 0x0
 
-    invoke-interface {v12, v13, v14}, Landroid/content/SharedPreferences;->getBoolean(Ljava/lang/String;Z)Z
+    invoke-virtual {p0, v12, v14}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v12
+
+    const-string v13, "version"
+
+    invoke-interface {v12, v13, v14}, Landroid/content/SharedPreferences;->getInt(Ljava/lang/String;I)I
 
     move-result v12
 
-    if-eqz v12, :cond_0
+    const/4 v14, 0x[(mod_version)]
 
-    :goto_0
-    return-void
+    if-gt v14, v12, :cond_5
 
-    :cond_0
-    const-string v12, "savegame"
+    goto :goto_0
+
+    :cond_5
+    const-string v12, "installedmods"
 
     const/4 v13, 0x0
 
@@ -169,15 +217,39 @@
 
     move-result-object v12
 
-    const-string v13, "[(mod_id)]"
+    const-string v13, "current"
 
-    const/4 v14, 0x1
+    const-string v14, "[(mod_id)]"
 
-    invoke-interface {v12, v13, v14}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+    invoke-interface {v12, v13, v14}, Landroid/content/SharedPreferences$Editor;->putString(Ljava/lang/String;Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;
 
     move-result-object v12
 
     invoke-interface {v12}, Landroid/content/SharedPreferences$Editor;->commit()Z
+
+
+    const-string v12, "[(mod_id)]"
+
+    const/4 v13, 0x0
+
+    invoke-virtual {p0, v12, v13}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v12
+
+    invoke-interface {v12}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v12
+
+    const-string v13, "version"
+
+    const/4 v14, 0x[(mod_version)]
+
+    invoke-interface {v12, v13, v14}, Landroid/content/SharedPreferences$Editor;->putInt(Ljava/lang/String;I)Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v12
+
+    invoke-interface {v12}, Landroid/content/SharedPreferences$Editor;->commit()Z
+
 
     new-instance v12, Ljava/lang/StringBuilder;
 
@@ -518,8 +590,9 @@
     move-object/from16 v0, p2
 
     invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    goto/16 :goto_0
+    
+    :goto_0
+    return-void
 
     :catch_0
     move-exception v2
@@ -669,20 +742,6 @@
     .prologue
     const/4 v8, 0x0
 
-    sget v6, Lcom/savegame/SavesRestoringPortable;->daDakdsIID:I
-
-    sget v7, Lcom/savegame/SavesRestoringPortable;->PdsjdolaSd:I
-
-    if-eq v6, v7, :cond_0
-
-    new-instance v6, Ljava/lang/Exception;
-
-    const-string v7, "System error..."
-
-    invoke-direct {v6, v7}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V
-
-    throw v6
-
     :cond_0
     new-instance v5, Ljava/util/zip/ZipInputStream;
 
@@ -692,21 +751,6 @@
     const/16 v6, 0x2000
 
     new-array v0, v6, [B
-
-    .local v0, "buffer":[B
-    sget v6, Lcom/savegame/SavesRestoringPortable;->daDakdsIID:I
-
-    sget v7, Lcom/savegame/SavesRestoringPortable;->PdsjdolaSd:I
-
-    if-eq v6, v7, :cond_2
-
-    new-instance v6, Ljava/lang/Exception;
-
-    const-string v7, "System error! please don\'t cheat..."
-
-    invoke-direct {v6, v7}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V
-
-    throw v6
 
     .local v4, "ze":Ljava/util/zip/ZipEntry;
     :cond_1
@@ -746,27 +790,6 @@
 
     invoke-direct {v1, v3, v8}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;Z)V
 
-    .local v1, "fos":Ljava/io/FileOutputStream;
-    sget v6, Lcom/savegame/SavesRestoringPortable;->daDakdsIID:I
-
-    sget v7, Lcom/savegame/SavesRestoringPortable;->PdsjdolaSd:I
-
-    if-eq v6, v7, :cond_3
-
-    invoke-virtual {v1}, Ljava/io/FileOutputStream;->close()V
-
-    invoke-virtual {v5}, Ljava/util/zip/ZipInputStream;->closeEntry()V
-
-    invoke-virtual {v5}, Ljava/util/zip/ZipInputStream;->close()V
-
-    new-instance v6, Ljava/lang/Exception;
-
-    const-string v7, "You are clever..."
-
-    invoke-direct {v6, v7}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V
-
-    throw v6
-
     :cond_3
     :goto_0
     invoke-virtual {v5, v0}, Ljava/util/zip/ZipInputStream;->read([B)I
@@ -787,23 +810,7 @@
     .end local v2    # "len":I
     .end local v3    # "newFile":Ljava/io/File;
     :cond_5
-    sget v6, Lcom/savegame/SavesRestoringPortable;->daDakdsIID:I
-
-    sget v7, Lcom/savegame/SavesRestoringPortable;->PdsjdolaSd:I
-
-    if-eq v6, v7, :cond_1
-
-    invoke-virtual {v5}, Ljava/util/zip/ZipInputStream;->closeEntry()V
-
-    invoke-virtual {v5}, Ljava/util/zip/ZipInputStream;->close()V
-
-    new-instance v6, Ljava/lang/Exception;
-
-    const-string v7, "And again..."
-
-    invoke-direct {v6, v7}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V
-
-    throw v6
+    goto :cond_1
 
     :cond_6
     invoke-virtual {v5}, Ljava/util/zip/ZipInputStream;->close()V
@@ -811,43 +818,9 @@
     return-void
 .end method
 
-.method private static vbHkPgcUWs()Ljava/lang/String;
-    .locals 1
-
-    .prologue
-    sget v0, Lcom/savegame/SavesRestoringPortable;->daDakdsIID:I
-
-    add-int/lit8 v0, v0, 0x1
-
-    sput v0, Lcom/savegame/SavesRestoringPortable;->daDakdsIID:I
-
-    const/16 v0, 0x4d
-
-    invoke-static {v0}, Ljava/lang/Character;->toString(C)Ljava/lang/String;
-
-    move-result-object v0
-
-    return-object v0
-.end method
-
 .method private static wPdauIdcaW(Landroid/content/Context;)V
-    .locals 1
-    .param p0, "c"    # Landroid/content/Context;
-
-    .prologue
-    invoke-static {}, Lcom/savegame/SavesRestoringPortable;->vbHkPgcUWs()Ljava/lang/String;
-
-    move-result-object v0
-
-    .line 187
-    .local v0, "str":Ljava/lang/String;
-    return-void
-.end method
-
-.method private static wPdauIdcaW(Landroid/content/Context;I)V
     .locals 2
     .param p0, "c"    # Landroid/content/Context;
-    .param p1, "wodDSsau"    # I
 
     .prologue
     

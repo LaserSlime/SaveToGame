@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using SaveToGameWpf.Logic.Classes;
 using SaveToGameWpf.Resources;
 using SmaliParser.Logic;
 
@@ -64,7 +62,10 @@ namespace SaveToGameWpf.Logic.Utils
             bool addSave,
             string message,
             int messagesCount,
-            bool encryptStrings
+            string modid,
+            int version,
+            bool overwriteExisting,
+            bool overwriteLegacy
         )
         {
             Guard.NotNullArgument(filePath, nameof(filePath));
@@ -122,13 +123,37 @@ namespace SaveToGameWpf.Logic.Utils
 
             text = text.Replace("[(key_bytes_init)]", toAdd.ToString());
 
+
+
+            string legacyModCheck = overwriteLegacy ? "" : FileResources.LegacyModCheck;
+
+            text = text.Replace("[(legacy_mod_check)]", legacyModCheck);
+
+            string modCheck = overwriteExisting ? "" : FileResources.ModCheck;
+
+            text = text.Replace("[(mod_check)]", modCheck);
+            
+            text = text.Replace("[(mod_replace_check)]", FileResources.ModCheck);
+
+
+            string errorMessageShow = FileResources.MessageShow;
+            
+            errorMessageShow = errorMessageShow.Replace("[(message)]", "[STG]: Mod install failed! There is most likely another incompatible mod already installed.");
+
+            text = text.Replace("[(error_message_show)]", errorMessageShow);
+
+
+            text = text.Replace("[(mod_id)]", modid);
+
+            text = text.Replace("[(mod_version)]", version.ToString("X"));
+
+
+
             using (var reader = new StringReader(text))
             {
                 var cls = SmaliClass.ParseStream(reader);
 
                 var dict = new Dictionary<string, SmaliMethod>();
-
-                int messagesLength = encryptStrings ? cls.Methods.Sum(method => SmaliStringEncryptor.EncryptMethod(method, cls.Name, dict)) : cls.Methods.Count;
 
                 foreach (var elem in dict)
                     cls.Methods.Add(elem.Value);
@@ -137,7 +162,6 @@ namespace SaveToGameWpf.Logic.Utils
                 {
                     cls.Save(writer);
 
-                    text = writer.ToString().Replace("[(message_length)]", messagesLength.ToString("X"));
                     text = text.Replace("[(data_restore_call)]", addSave ? FileResources.DataRestoreCall : "");
 
                     File.WriteAllText(filePath, text, SmaliEncoding);

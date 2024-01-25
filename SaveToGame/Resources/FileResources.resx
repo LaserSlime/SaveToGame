@@ -128,12 +128,12 @@
     <value>Files\MessageShow.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="SavesRestoringPortable" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Files\SavesRestoringPortable.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>Files\SavesRestoringPortable.smali;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="SavesRestoringPortable___Backup" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Files\SavesRestoringPortable - Backup.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="LegacyModCheck" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Files\LegacyModCheck_.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="SavesRestoring_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Files\SavesRestoring_new.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="ModCheck" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Files\ModCheck.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

@@ -19,10 +19,10 @@ namespace Interfaces.OrganisationItems
 
         int Version { get; set; }
 
-        bool StringEncryption { get; set; }
+        string ModId { get; set; }
 
-        string ModName { get; set; }
+        int ModVersion { get; set; }
 
-        string ModVersion { get; set; }
+        bool OverwriteLegacy { get; set; }
     }
 }
