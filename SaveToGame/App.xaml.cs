@@ -136,7 +136,7 @@ namespace SaveToGameWpf
                 return new SettingsBuilder<AppSettings>()
                     .WithFile(
                         Path.Combine(
-                            c.Resolve<GlobalVariables>().AppDataPath,
+                            c.Resolve<GlobalVariables>().PathToActualExeFolder,
                             "appSettings.json"
                         )
                     )

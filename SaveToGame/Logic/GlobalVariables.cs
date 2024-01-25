@@ -110,6 +110,8 @@ namespace SaveToGameWpf.Logic
         /// </summary>
         public readonly string PortableSwitchFile;
 
+        public readonly string PathToActualExeFolder;
+
         public string? LatestModdedApkPath { get; set; }
         
         public GlobalVariables()
@@ -118,6 +120,8 @@ namespace SaveToGameWpf.Logic
             PathToExeFolder = Path.GetDirectoryName(PathToExe) ?? "";
             PortableSwitchFile = Path.Combine(PathToExeFolder, "portable");
             IsPortable = File.Exists(PortableSwitchFile);
+
+            PathToActualExeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
 
             AppDataPath =
                 IsPortable
