@@ -13,6 +13,10 @@ namespace Interfaces.ViewModels
         IProperty<string> PopupBoxText { get; }
         IProperty<int> MessagesCount { get; }
 
+        IProperty<string> ModID { get; }
+        IProperty<int> ModVersion { get; }
+        IProperty<bool> OverwriteLegacy { get; }
+
         IProperty<string> CurrentApk { get; }
         IProperty<string> CurrentSave { get; }
 

@@ -61,7 +61,7 @@
                             Header="Lucky Patcher" IsCheckable="True"
                             IsChecked="{Binding BackupType.Value, Converter={StaticResource BackupToCheckedConverter}, ConverterParameter={x:Static enums:BackupType.LuckyPatcher}}"/>
                     </MenuItem>
-                    
+
                     <MenuItem
                         Header="{x:Static localization:MainResources.AlternativeSigning}"
                         IsCheckable="True"
@@ -86,7 +86,7 @@
                     Click="AboutProgramItem_Click" />
             </Menu>
 
-            <Grid DockPanel.Dock="Top" Margin="0,5">
+            <Grid DockPanel.Dock="Top" Margin="0,5" Height="173">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
@@ -135,7 +135,7 @@
                         Content="{x:Static localization:MainResources.Begin}"/>
                 </Grid>
 
-                <Grid Grid.Row="1" Grid.Column="0" Margin="0,5,0,0">
+                <Grid Grid.Row="1" Grid.Column="0" Margin="0,5,0,81">
                     <Grid.Resources>
                         <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                             <Setter Property="MaxLength" Value="1000"/>
@@ -157,12 +157,70 @@
 
                     <TextBlock
                         Grid.Column="0"
-                        Text="{x:Static localization:MainResources.TextOfMessage}"/>
+                        Text="{x:Static localization:MainResources.TextOfMessage}" Margin="0,4,0,0" VerticalAlignment="Top"/>
 
                     <TextBox
                         Grid.Column="1"
                         Text="{Binding PopupBoxText.Value}"
-                        AcceptsReturn="True" MaxLines="3"/>
+                        AcceptsReturn="True" MaxLines="3" Height="23" Margin="5,0,0,0" VerticalAlignment="Top"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0" Margin="0,32,0,55">
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                            <Setter Property="MaxLength" Value="1000"/>
+                            <Setter Property="Margin" Value="5,0,0,0"/>
+                        </Style>
+
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Column="0"
+                        Text="Mod ID:" Margin="0,4,50,0" VerticalAlignment="Top" Height="19"/>
+
+                    <TextBox
+                        Grid.Column="1"
+                        Text="{Binding ModID.Value}"
+                        AcceptsReturn="False" MaxLines="3" Margin="5,1,0,0" Height="25" VerticalAlignment="Top"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0" Margin="0,63,0,10">
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                            <Setter Property="MaxLength" Value="1000"/>
+                            <Setter Property="Margin" Value="5,0,0,0"/>
+                        </Style>
+
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Column="0"
+                        Text="Mod version:" Margin="0,0,10,4" VerticalAlignment="Stretch"/>
+
+                    <TextBox
+                        Grid.Column="1"
+                        Text="{Binding ModVersion.Value}"
+                        AcceptsReturn="False" MaxLines="3" Margin="5,0,0,1" Height="25" VerticalAlignment="Bottom"/>
                 </Grid>
 
                 <GroupBox
@@ -205,7 +263,9 @@
                         <Label
                             Margin="0,4,0,0"
                             Content="{Binding Value, ElementName=Sl, Mode=OneWay}"
-                            ContentStringFormat="{x:Static localization:MainResources.MessagesCount}" />
+                            ContentStringFormat="{x:Static localization:MainResources.MessagesCount}" Height="31" />
+
+                        <CheckBox IsChecked="{Binding OverwriteLegacy.Value}" Content="Overwrite legacy mods" Height="18"/>
                     </StackPanel>
                 </GroupBox>
             </Grid>

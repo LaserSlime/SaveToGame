@@ -110,6 +110,10 @@ namespace SaveToGameWpf.Windows
         {
             _settings.PopupMessage = ViewModel.PopupBoxText.Value;
 
+            _settings.ModId = ViewModel.ModID.Value;
+            _settings.ModVersion = ViewModel.ModVersion.Value;
+            _settings.OverwriteLegacy = ViewModel.OverwriteLegacy.Value;
+
             if (_shutdownOnClose)
             {
                 Application.Current.Shutdown();
