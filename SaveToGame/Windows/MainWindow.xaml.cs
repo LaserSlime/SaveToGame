@@ -24,6 +24,7 @@ using SharedData.Enums;
 using Application = System.Windows.Application;
 using DragEventArgs = System.Windows.DragEventArgs;
 using ATempUtils = AndroidHelper.Logic.Utils.TempUtils;
+using System.Windows.Input;
 
 namespace SaveToGameWpf.Windows
 {
@@ -624,6 +625,15 @@ namespace SaveToGameWpf.Windows
                     throw;
 #endif
                 }
+            }
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Check if the entered character is a digit
+            if (!Char.IsDigit(e.Text, 0))
+            {
+                e.Handled = true; // Ignore the input if it's not a digit
             }
         }
 
