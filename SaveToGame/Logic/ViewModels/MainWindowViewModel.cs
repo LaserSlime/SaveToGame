@@ -17,6 +17,11 @@ namespace SaveToGameWpf.Logic.ViewModels
         public IProperty<string> PopupBoxText { get; }
         public IProperty<int> MessagesCount { get; }
 
+        public IProperty<string> ModID { get; }
+        public IProperty<int> ModVersion { get; }
+        public IProperty<bool> OverwriteLegacy { get; }
+
+
         public IProperty<string> CurrentApk { get; }
         public IProperty<string> CurrentSave { get; }
 
@@ -41,6 +46,10 @@ namespace SaveToGameWpf.Logic.ViewModels
 
             PopupBoxText = new FieldProperty<string>(appSettings.PopupMessage);
             MessagesCount = new FieldProperty<int>(1);
+
+            ModID = new FieldProperty<string>(appSettings.ModId);
+            ModVersion = new FieldProperty<int>(appSettings.ModVersion);
+            OverwriteLegacy = new FieldProperty<bool>(appSettings.OverwriteLegacy);
 
             CurrentApk = new FieldProperty<string>();
             CurrentSave = new FieldProperty<string>();
