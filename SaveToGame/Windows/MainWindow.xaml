@@ -191,7 +191,7 @@
                     <TextBox
                         Grid.Column="1"
                         Text="{Binding ModID.Value}"
-                        AcceptsReturn="False" MaxLines="3" Margin="5,1,0,0" Height="25" VerticalAlignment="Top"/>
+                        AcceptsReturn="False" MaxLines="1" Margin="5,1,0,0" Height="25" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="0" Margin="0,63,0,10">
                     <Grid.Resources>
@@ -220,7 +220,7 @@
                     <TextBox
                         Grid.Column="1"
                         Text="{Binding ModVersion.Value}"
-                        AcceptsReturn="False" MaxLines="3" Margin="5,0,0,1" Height="25" VerticalAlignment="Bottom"/>
+                        AcceptsReturn="False" MaxLines="1" Margin="5,0,0,1" Height="25" VerticalAlignment="Bottom"/>
                 </Grid>
 
                 <GroupBox
