@@ -104,7 +104,7 @@ namespace SaveToGameWpf.Logic.ViewModels
             }, () => !Working.Value).BindCanExecute(Working);
             ChooseSaveCommand = new ActionCommand(() =>
             {
-                if (_settings.BackupType == BackupType.LuckyPatcher)
+                if (_settings.BackupType == BackupType.LuckyPatcher || _settings.BackupType == BackupType.Folder)
                 {
                     var (success, folderPath) = PickerUtils.PickFolder();
 

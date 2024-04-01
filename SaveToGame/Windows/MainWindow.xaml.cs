@@ -138,7 +138,7 @@ namespace SaveToGameWpf.Windows
 
         private void ChooseSaveBtn_Click(object sender, EventArgs e)
         {
-            if (ViewModel.BackupType.Value != BackupType.LuckyPatcher)
+            if (ViewModel.BackupType.Value != BackupType.LuckyPatcher && ViewModel.BackupType.Value != BackupType.Folder)
             {
                 var (success, filePath) = PickerUtils.PickFile(filter: MainResources.Archives + @" (*.tar.gz)|*.tar.gz");
 

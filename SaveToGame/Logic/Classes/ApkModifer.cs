@@ -34,6 +34,11 @@ namespace SaveToGameWpf.Logic.Classes
 
             switch (backupType)
             {
+                case BackupType.Folder:
+                    {
+                        CreateArchive(pathToBackup, resultInternalDataPath);
+                        break;
+                    }
                 case BackupType.Titanium:
                     {
                         #region Структура

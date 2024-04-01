@@ -50,6 +50,10 @@
 
                     <MenuItem Header="{x:Static localization:MainResources.BackupType}">
                         <MenuItem 
+                            Header="Folder" IsCheckable="True"
+                            IsChecked="{Binding BackupType.Value, Converter={StaticResource BackupToCheckedConverter}, ConverterParameter={x:Static enums:BackupType.Folder}}"/>
+
+                        <MenuItem 
                             Header="Titanium" IsCheckable="True"
                             IsChecked="{Binding BackupType.Value, Converter={StaticResource BackupToCheckedConverter}, ConverterParameter={x:Static enums:BackupType.Titanium}}"/>
 

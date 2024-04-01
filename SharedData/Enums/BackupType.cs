@@ -5,6 +5,8 @@
     /// </summary>
     public enum BackupType
     {
+        Folder,
+
         /// <summary>
         /// Сохранение программы Titanium Backup
         /// </summary>
