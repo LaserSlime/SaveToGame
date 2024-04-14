@@ -294,6 +294,12 @@ namespace SaveToGameWpf.Resources.Localizations {
             }
         }
         
+        public static string ChooseSetupSave {
+            get {
+                return ResourceManager.GetString("ChooseSetupSave", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Выбрать сохранение.
         /// </summary>

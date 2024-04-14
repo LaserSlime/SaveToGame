@@ -159,6 +159,9 @@
   <data name="ChooseLicense" xml:space="preserve">
     <value>Choose license file</value>
   </data>
+  <data name="ChooseSetupSave" xml:space="preserve">
+    <value>Choose setup save</value>
+  </data>
   <data name="ChooseSave" xml:space="preserve">
     <value>Choose save</value>
   </data>

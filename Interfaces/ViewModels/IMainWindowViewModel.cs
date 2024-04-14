@@ -18,6 +18,7 @@ namespace Interfaces.ViewModels
         IProperty<bool> OverwriteLegacy { get; }
 
         IProperty<string> CurrentApk { get; }
+        IProperty<string> CurrentSetupSave { get; }
         IProperty<string> CurrentSave { get; }
 
         IProperty<BackupType> BackupType { get; }

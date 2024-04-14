@@ -154,6 +154,24 @@ namespace SaveToGameWpf.Windows
             }
         }
 
+        private void ChooseSetupSaveBtn_Click(object sender, EventArgs e)
+        {
+            if (ViewModel.BackupType.Value != BackupType.LuckyPatcher && ViewModel.BackupType.Value != BackupType.Folder)
+            {
+                var (success, filePath) = PickerUtils.PickFile(filter: MainResources.Archives + @" (*.tar.gz)|*.tar.gz");
+
+                if (success)
+                    ViewModel.CurrentSetupSave.Value = filePath;
+            }
+            else
+            {
+                var (success, folderPath) = PickerUtils.PickFolder();
+
+                if (success)
+                    ViewModel.CurrentSetupSave.Value = folderPath;
+            }
+        }
+
         private async void StartBtn_Click(object sender, EventArgs e)
         {
             string apkFile = ViewModel.CurrentApk.Value;
@@ -320,6 +338,7 @@ namespace SaveToGameWpf.Windows
 
             string resultApkPath = sourceApkPath.Remove(sourceApkPath.Length - Path.GetExtension(sourceApkPath).Length) + "_mod.apk";
             string pathToSave = ViewModel.CurrentSave.Value;
+            string pathToSetupSave = ViewModel.CurrentSetupSave.Value;
 
             IApktool apktool = _apktoolProvider.Get();
             IProcessDataHandler dataHandler = new ProcessDataCombinedHandler(data => Log(data));
@@ -346,22 +365,35 @@ namespace SaveToGameWpf.Windows
                 {
                     using (var internalDataBackup = ATempUtils.UseTempFile(tempFileProvider))
                     using (var externalDataBackup = ATempUtils.UseTempFile(tempFileProvider))
+                    using (var internalSetupDataBackup = ATempUtils.UseTempFile(tempFileProvider))
+                    using (var externalSetupDataBackup = ATempUtils.UseTempFile(tempFileProvider))
                     {
+                        string internalBackup = internalDataBackup.TempFile;
+                        string externalBackup = externalDataBackup.TempFile;
+                        string internalSetupBackup = internalSetupDataBackup.TempFile;
+                        string externalSetupBackup = externalSetupDataBackup.TempFile;
+
                         ApkModifer.ParseBackup(
                             pathToBackup: pathToSave,
                             backupType: backupType,
-                            resultInternalDataPath: internalDataBackup.TempFile,
-                            resultExternalDataPath: externalDataBackup.TempFile,
+                            resultInternalDataPath: internalBackup,
+                            resultExternalDataPath: externalBackup,
                             tempFolderProvider: tempFolderProvider
                         );
-
-                        string internalBackup = internalDataBackup.TempFile;
-                        string externalBackup = externalDataBackup.TempFile;
+                        ApkModifer.ParseBackup(
+                            pathToBackup: pathToSetupSave,
+                            backupType: backupType,
+                            resultInternalDataPath: internalSetupBackup,
+                            resultExternalDataPath: externalSetupBackup,
+                            tempFolderProvider: tempFolderProvider
+                        );
 
                         var fileToAssetsName = new Dictionary<string, string>
                         {
                             {internalBackup, "data.save"},
-                            {externalBackup, "extdata.save"}
+                            {externalBackup, "extdata.save"},
+                            {internalSetupBackup, "setupdata.save"},
+                            {externalSetupBackup, "extsetupdata.save"}
                         };
 
                         foreach (var (file, assetsName) in fileToAssetsName.Enumerate())

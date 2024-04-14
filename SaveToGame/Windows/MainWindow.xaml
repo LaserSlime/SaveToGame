@@ -81,9 +81,9 @@
                         ToolTipService.ShowOnDisabled="True"/>
                 </MenuItem>
 
-                <MenuItem 
+                <!--<MenuItem 
                     Header="{x:Static localization:MainResources.InstallApkVersion}" 
-                    Click="InstallApkClick"/>
+                    Click="InstallApkClick"/>-->
 
                 <MenuItem 
                     Header="{x:Static localization:MainResources.AboutProgram}"
@@ -103,13 +103,15 @@
                 <Grid Height="60">
                     <Grid.Resources>
                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                            <Setter Property="Padding" Value="20,5"/>
-                            <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="Padding" Value="7,5"/>
+                            <Setter Property="FontSize" Value="14"/>
                             <Setter Property="IsEnabled" Value="{Binding Working.Value, Converter={StaticResource InvertBoolConverter}}"/>
                         </Style>
                     </Grid.Resources>
 
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="2*"/>
@@ -127,6 +129,14 @@
 
                     <Button 
                         Grid.Column="2"
+                        Click="ChooseSetupSaveBtn_Click"
+                        Content="{x:Static localization:MainResources.ChooseSetupSave}"
+                        DragOver="Save_DragOver" Drop="Save_DragDrop" AllowDrop="True"
+                        ToolTip="{Binding CurrentSetupSave.Value, Mode=OneWay}"
+                        ToolTipService.ShowOnDisabled="True"/>
+
+                    <Button 
+                        Grid.Column="4"
                         Click="ChooseSaveBtn_Click"
                         Content="{x:Static localization:MainResources.ChooseSave}"
                         DragOver="Save_DragOver" Drop="Save_DragDrop" AllowDrop="True"
@@ -134,7 +144,7 @@
                         ToolTipService.ShowOnDisabled="True"/>
 
                     <Button 
-                        Grid.Column="4"
+                        Grid.Column="6"
                         Click="StartBtn_Click"
                         Content="{x:Static localization:MainResources.Begin}"/>
                 </Grid>

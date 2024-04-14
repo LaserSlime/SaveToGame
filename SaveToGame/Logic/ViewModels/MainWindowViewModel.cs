@@ -23,6 +23,7 @@ namespace SaveToGameWpf.Logic.ViewModels
 
 
         public IProperty<string> CurrentApk { get; }
+        public IProperty<string> CurrentSetupSave { get; }
         public IProperty<string> CurrentSave { get; }
 
         public IProperty<BackupType> BackupType { get; }
@@ -52,6 +53,7 @@ namespace SaveToGameWpf.Logic.ViewModels
             OverwriteLegacy = new FieldProperty<bool>(appSettings.OverwriteLegacy);
 
             CurrentApk = new FieldProperty<string>();
+            CurrentSetupSave = new FieldProperty<string>();
             CurrentSave = new FieldProperty<string>();
 
             BackupType = new DelegatedProperty<BackupType>(

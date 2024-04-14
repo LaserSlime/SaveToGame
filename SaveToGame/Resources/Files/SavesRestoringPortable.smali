@@ -205,52 +205,6 @@
     goto :goto_0
 
     :cond_5
-    const-string v12, "installedmods"
-
-    const/4 v13, 0x0
-
-    invoke-virtual {p0, v12, v13}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
-
-    move-result-object v12
-
-    invoke-interface {v12}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
-
-    move-result-object v12
-
-    const-string v13, "current"
-
-    const-string v14, "[(mod_id)]"
-
-    invoke-interface {v12, v13, v14}, Landroid/content/SharedPreferences$Editor;->putString(Ljava/lang/String;Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;
-
-    move-result-object v12
-
-    invoke-interface {v12}, Landroid/content/SharedPreferences$Editor;->commit()Z
-
-
-    const-string v12, "[(mod_id)]"
-
-    const/4 v13, 0x0
-
-    invoke-virtual {p0, v12, v13}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
-
-    move-result-object v12
-
-    invoke-interface {v12}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
-
-    move-result-object v12
-
-    const-string v13, "version"
-
-    const/4 v14, 0x[(mod_version)]
-
-    invoke-interface {v12, v13, v14}, Landroid/content/SharedPreferences$Editor;->putInt(Ljava/lang/String;I)Landroid/content/SharedPreferences$Editor;
-
-    move-result-object v12
-
-    invoke-interface {v12}, Landroid/content/SharedPreferences$Editor;->commit()Z
-
-
     new-instance v12, Ljava/lang/StringBuilder;
 
     invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
@@ -445,8 +399,8 @@
     .end local v10    # "spec":Ljavax/crypto/spec/SecretKeySpec;
     .end local v11    # "stream":Ljava/io/InputStream;
     :cond_2
-    :goto_2
-    const-string v12, "extobb.save"
+	:goto_2
+    const-string v12, "setupdata.save"
 
     invoke-static {v8, v12}, Lcom/savegame/SavesRestoringPortable;->FileExists([Ljava/lang/String;Ljava/lang/String;)Z
 
@@ -459,19 +413,21 @@
 
     invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-virtual {p0}, Landroid/content/Context;->getObbDir()Ljava/io/File;
+																			 
 
-    move-result-object v13
+						  
 
-    invoke-virtual {v13}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+																			 
 
-    move-result-object v13
+    const-string v13, "/data/data/"
 
     invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v12
 
-    const-string v13, "/"
+    invoke-virtual {p0}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v13
 
     invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -481,25 +437,72 @@
 
     move-result-object v9
 
-    .restart local v9    # "path":Ljava/lang/String;
-    
-    const-string v12, "extobb.save: Restoring..."
+    .local v9, "path":Ljava/lang/String;
+	
+												 
+
+    const-string v12, "setupdata.save : Restoring..."
 
     move-object/from16 v0, p2
 
     invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    const-string v12, "extobb.save"
+    const-string v12, "AES/CBC/PKCS5Padding"
+
+    invoke-static {v12}, Ljavax/crypto/Cipher;->getInstance(Ljava/lang/String;)Ljavax/crypto/Cipher;
+
+    move-result-object v3
+
+    .local v3, "enc":Ljavax/crypto/Cipher;
+    const/16 v12, 0x10
+
+    new-array v1, v12, [B
+
+    .local v1, "bytes":[B
+    
+	[(iv_bytes_init)]
+
+    new-instance v6, Ljavax/crypto/spec/IvParameterSpec;
+
+    invoke-direct {v6, v1}, Ljavax/crypto/spec/IvParameterSpec;-><init>([B)V
+
+    .local v6, "ivParameterSpec":Ljavax/crypto/spec/IvParameterSpec;
+    const/16 v12, 0x10
+
+    new-array v7, v12, [B
+
+    .local v7, "keyBytes":[B
+
+	[(key_bytes_init)]
+
+    new-instance v10, Ljavax/crypto/spec/SecretKeySpec;
+
+    const-string v12, "AES"
+
+    invoke-direct {v10, v7, v12}, Ljavax/crypto/spec/SecretKeySpec;-><init>([BLjava/lang/String;)V
+
+    .local v10, "spec":Ljavax/crypto/spec/SecretKeySpec;
+    const/4 v12, 0x2
+
+    invoke-virtual {v3, v12, v10, v6}, Ljavax/crypto/Cipher;->init(ILjava/security/Key;Ljava/security/spec/AlgorithmParameterSpec;)V
+
+    const-string v12, "setupdata.save"
 
     move-object/from16 v0, p1
 
     invoke-virtual {v0, v12}, Landroid/content/res/AssetManager;->open(Ljava/lang/String;)Ljava/io/InputStream;
 
-    move-result-object v12
+    move-result-object v11
 
-    invoke-static {v12, v9}, Lcom/savegame/SavesRestoringPortable;->unZipIt(Ljava/io/InputStream;Ljava/lang/String;)V
+    .local v11, "stream":Ljava/io/InputStream;
+    new-instance v4, Ljavax/crypto/CipherInputStream;
 
-    const-string v12, "extobb.save: Successfully restored"
+    invoke-direct {v4, v11, v3}, Ljavax/crypto/CipherInputStream;-><init>(Ljava/io/InputStream;Ljavax/crypto/Cipher;)V
+
+    .local v4, "encStream":Ljavax/crypto/CipherInputStream;
+    invoke-static {v4, v9}, Lcom/savegame/SavesRestoringPortable;->unZipIt(Ljava/io/InputStream;Ljava/lang/String;)V
+
+    const-string v12, "setupdata.save: Successfully restored"
 
     move-object/from16 v0, p2
 
@@ -507,7 +510,14 @@
     :try_end_1
     .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_1
 
+    .end local v1    # "bytes":[B
+    .end local v3    # "enc":Ljavax/crypto/Cipher;
+    .end local v4    # "encStream":Ljavax/crypto/CipherInputStream;
+    .end local v6    # "ivParameterSpec":Ljavax/crypto/spec/IvParameterSpec;
+    .end local v7    # "keyBytes":[B
     .end local v9    # "path":Ljava/lang/String;
+    .end local v10    # "spec":Ljavax/crypto/spec/SecretKeySpec;
+    .end local v11    # "stream":Ljava/io/InputStream;
     :cond_3
     :goto_3
     const-string v12, "extdata.save"
@@ -590,7 +600,54 @@
     move-object/from16 v0, p2
 
     invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-    
+
+
+    const-string v12, "installedmods"
+
+    const/4 v13, 0x0
+
+    invoke-virtual {p0, v12, v13}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v12
+
+    invoke-interface {v12}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v12
+
+    const-string v13, "current"
+
+    const-string v14, "[(mod_id)]"
+
+    invoke-interface {v12, v13, v14}, Landroid/content/SharedPreferences$Editor;->putString(Ljava/lang/String;Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v12
+
+    invoke-interface {v12}, Landroid/content/SharedPreferences$Editor;->commit()Z
+
+
+    const-string v12, "[(mod_id)]"
+
+    const/4 v13, 0x0
+
+    invoke-virtual {p0, v12, v13}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v12
+
+    invoke-interface {v12}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v12
+
+    const-string v13, "version"
+
+    const/4 v14, 0x[(mod_version)]
+
+    invoke-interface {v12, v13, v14}, Landroid/content/SharedPreferences$Editor;->putInt(Ljava/lang/String;I)Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v12
+
+    invoke-interface {v12}, Landroid/content/SharedPreferences$Editor;->commit()Z
+
+
     :goto_0
     return-void
 
@@ -642,8 +699,8 @@
     :catch_1
     move-exception v2
 
-    .restart local v2    # "e":Ljava/lang/Exception;
-    const-string v12, "Error: Can\'t restore obb"
+    .local v2, "e":Ljava/lang/Exception;
+    const-string v12, "Error: Can\'t restore setup data"
 
     const/4 v13, 0x1
 
@@ -657,7 +714,7 @@
 
     invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v13, "extobb.save: Message: "
+    const-string v13, "data.save: Message: "
 
     invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
