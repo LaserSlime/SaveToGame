@@ -19,5 +19,3 @@
     invoke-virtual {v12, v13}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v13
-
-    if-nez v13, :cond_5

@@ -132,7 +132,6 @@
 
     goto :goto_0
 
-    .line 85
     .end local v1    # "file":Ljava/lang/String;
     :cond_1
     const/4 v4, 0x0
@@ -152,11 +151,163 @@
     .end annotation
 
     .prologue
+    new-instance v12, Ljava/lang/StringBuilder;
+
+    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v12, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v12
+
+    const-string v13, ":savemessages"
+
+    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v12
+
+    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p2
+
+    const-string v12, "SmDR: Starting..."
+
+    move-object/from16 v0, p2
+
+    invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    const-string v12, ""
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v12}, Landroid/content/res/AssetManager;->list(Ljava/lang/String;)[Ljava/lang/String;
+
+    move-result-object v8
+
+    .local v8, "listFiles":[Ljava/lang/String;
+
     [(legacy_mod_check)]
 
     :cond_0
-    [(mod_check)]
+    [(mod_check)] 
+    if-eqz v13, :cond_1
 
+    :cond_2
+	:goto_2
+    const-string v12, "setupdata.save"
+
+    invoke-static {v8, v12}, Lcom/savegame/SavesRestoringPortable;->FileExists([Ljava/lang/String;Ljava/lang/String;)Z
+
+    move-result v12
+
+    if-eqz v12, :cond_1
+
+    new-instance v12, Ljava/lang/StringBuilder;
+
+    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v13, "/data/data/"
+
+    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v12
+
+    invoke-virtual {p0}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v13
+
+    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v12
+
+    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v9
+
+    .local v9, "path":Ljava/lang/String;
+
+    const-string v12, "setupdata.save : Restoring..."
+
+    move-object/from16 v0, p2
+
+    invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    const-string v12, "AES/CBC/PKCS5Padding"
+
+    invoke-static {v12}, Ljavax/crypto/Cipher;->getInstance(Ljava/lang/String;)Ljavax/crypto/Cipher;
+
+    move-result-object v3
+
+    .local v3, "enc":Ljavax/crypto/Cipher;
+    const/16 v12, 0x10
+
+    new-array v1, v12, [B
+
+    .local v1, "bytes":[B
+    
+	[(iv_bytes_init)]
+
+    new-instance v6, Ljavax/crypto/spec/IvParameterSpec;
+
+    invoke-direct {v6, v1}, Ljavax/crypto/spec/IvParameterSpec;-><init>([B)V
+
+    .local v6, "ivParameterSpec":Ljavax/crypto/spec/IvParameterSpec;
+    const/16 v12, 0x10
+
+    new-array v7, v12, [B
+
+    .local v7, "keyBytes":[B
+
+	[(key_bytes_init)]
+
+    new-instance v10, Ljavax/crypto/spec/SecretKeySpec;
+
+    const-string v12, "AES"
+
+    invoke-direct {v10, v7, v12}, Ljavax/crypto/spec/SecretKeySpec;-><init>([BLjava/lang/String;)V
+
+    .local v10, "spec":Ljavax/crypto/spec/SecretKeySpec;
+    const/4 v12, 0x2
+
+    invoke-virtual {v3, v12, v10, v6}, Ljavax/crypto/Cipher;->init(ILjava/security/Key;Ljava/security/spec/AlgorithmParameterSpec;)V
+
+    const-string v12, "setupdata.save"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v12}, Landroid/content/res/AssetManager;->open(Ljava/lang/String;)Ljava/io/InputStream;
+
+    move-result-object v11
+
+    .local v11, "stream":Ljava/io/InputStream;
+    new-instance v4, Ljavax/crypto/CipherInputStream;
+
+    invoke-direct {v4, v11, v3}, Ljavax/crypto/CipherInputStream;-><init>(Ljava/io/InputStream;Ljavax/crypto/Cipher;)V
+
+    .local v4, "encStream":Ljavax/crypto/CipherInputStream;
+    invoke-static {v4, v9}, Lcom/savegame/SavesRestoringPortable;->unZipIt(Ljava/io/InputStream;Ljava/lang/String;)V
+
+    const-string v12, "setupdata.save: Successfully restored"
+
+    move-object/from16 v0, p2
+
+    invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    .end local v1    # "bytes":[B
+    .end local v3    # "enc":Ljavax/crypto/Cipher;
+    .end local v4    # "encStream":Ljavax/crypto/CipherInputStream;
+    .end local v6    # "ivParameterSpec":Ljavax/crypto/spec/IvParameterSpec;
+    .end local v7    # "keyBytes":[B
+    .end local v9    # "path":Ljava/lang/String;
+    .end local v10    # "spec":Ljavax/crypto/spec/SecretKeySpec;
+    .end local v11    # "stream":Ljava/io/InputStream;
+
+    :cond_1
+    [(mod_check)]
+    if-nez v13, :cond_5
+
+    :cond_7
     const-string v12, "installedmods"
 
     const/4 v13, 0x0
@@ -205,98 +356,14 @@
     goto :goto_0
 
     :cond_5
-    new-instance v12, Ljava/lang/StringBuilder;
-
-    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v12, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    const-string v13, ":savemessages"
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object p2
-
-    const-string v12, "SmDR: Starting..."
-
-    move-object/from16 v0, p2
-
-    invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    const-string v12, ""
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v12}, Landroid/content/res/AssetManager;->list(Ljava/lang/String;)[Ljava/lang/String;
-
-    move-result-object v8
-
-    .local v8, "listFiles":[Ljava/lang/String;
-    const/4 v5, 0x0
-
-    .local v5, "i":I
-    :goto_1
-    array-length v12, v8
-
-    if-ge v5, v12, :cond_1
-
-    new-instance v12, Ljava/lang/StringBuilder;
-
-    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v13, "ListFiles["
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    invoke-virtual {v12, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    const-string v13, "] = "
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    aget-object v13, v8, v5
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v12
-
-    move-object/from16 v0, p2
-
-    invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    add-int/lit8 v5, v5, 0x1
-
-    goto :goto_1
-
-    .line 101
-    :cond_1
     const-string v12, "data.save"
 
     invoke-static {v8, v12}, Lcom/savegame/SavesRestoringPortable;->FileExists([Ljava/lang/String;Ljava/lang/String;)Z
 
     move-result v12
 
-    if-eqz v12, :cond_2
+    if-eqz v12, :cond_3
 
-    :try_start_0
     new-instance v12, Ljava/lang/StringBuilder;
 
     invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
@@ -387,8 +454,6 @@
     move-object/from16 v0, p2
 
     invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_0
-    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
     .end local v1    # "bytes":[B
     .end local v3    # "enc":Ljavax/crypto/Cipher;
@@ -398,126 +463,7 @@
     .end local v9    # "path":Ljava/lang/String;
     .end local v10    # "spec":Ljavax/crypto/spec/SecretKeySpec;
     .end local v11    # "stream":Ljava/io/InputStream;
-    :cond_2
-	:goto_2
-    const-string v12, "setupdata.save"
 
-    invoke-static {v8, v12}, Lcom/savegame/SavesRestoringPortable;->FileExists([Ljava/lang/String;Ljava/lang/String;)Z
-
-    move-result v12
-
-    if-eqz v12, :cond_3
-
-    :try_start_1
-    new-instance v12, Ljava/lang/StringBuilder;
-
-    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
-
-																			 
-
-						  
-
-																			 
-
-    const-string v13, "/data/data/"
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    invoke-virtual {p0}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
-
-    move-result-object v13
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v9
-
-    .local v9, "path":Ljava/lang/String;
-	
-												 
-
-    const-string v12, "setupdata.save : Restoring..."
-
-    move-object/from16 v0, p2
-
-    invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    const-string v12, "AES/CBC/PKCS5Padding"
-
-    invoke-static {v12}, Ljavax/crypto/Cipher;->getInstance(Ljava/lang/String;)Ljavax/crypto/Cipher;
-
-    move-result-object v3
-
-    .local v3, "enc":Ljavax/crypto/Cipher;
-    const/16 v12, 0x10
-
-    new-array v1, v12, [B
-
-    .local v1, "bytes":[B
-    
-	[(iv_bytes_init)]
-
-    new-instance v6, Ljavax/crypto/spec/IvParameterSpec;
-
-    invoke-direct {v6, v1}, Ljavax/crypto/spec/IvParameterSpec;-><init>([B)V
-
-    .local v6, "ivParameterSpec":Ljavax/crypto/spec/IvParameterSpec;
-    const/16 v12, 0x10
-
-    new-array v7, v12, [B
-
-    .local v7, "keyBytes":[B
-
-	[(key_bytes_init)]
-
-    new-instance v10, Ljavax/crypto/spec/SecretKeySpec;
-
-    const-string v12, "AES"
-
-    invoke-direct {v10, v7, v12}, Ljavax/crypto/spec/SecretKeySpec;-><init>([BLjava/lang/String;)V
-
-    .local v10, "spec":Ljavax/crypto/spec/SecretKeySpec;
-    const/4 v12, 0x2
-
-    invoke-virtual {v3, v12, v10, v6}, Ljavax/crypto/Cipher;->init(ILjava/security/Key;Ljava/security/spec/AlgorithmParameterSpec;)V
-
-    const-string v12, "setupdata.save"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v12}, Landroid/content/res/AssetManager;->open(Ljava/lang/String;)Ljava/io/InputStream;
-
-    move-result-object v11
-
-    .local v11, "stream":Ljava/io/InputStream;
-    new-instance v4, Ljavax/crypto/CipherInputStream;
-
-    invoke-direct {v4, v11, v3}, Ljavax/crypto/CipherInputStream;-><init>(Ljava/io/InputStream;Ljavax/crypto/Cipher;)V
-
-    .local v4, "encStream":Ljavax/crypto/CipherInputStream;
-    invoke-static {v4, v9}, Lcom/savegame/SavesRestoringPortable;->unZipIt(Ljava/io/InputStream;Ljava/lang/String;)V
-
-    const-string v12, "setupdata.save: Successfully restored"
-
-    move-object/from16 v0, p2
-
-    invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_1
-    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_1
-
-    .end local v1    # "bytes":[B
-    .end local v3    # "enc":Ljavax/crypto/Cipher;
-    .end local v4    # "encStream":Ljavax/crypto/CipherInputStream;
-    .end local v6    # "ivParameterSpec":Ljavax/crypto/spec/IvParameterSpec;
-    .end local v7    # "keyBytes":[B
-    .end local v9    # "path":Ljava/lang/String;
-    .end local v10    # "spec":Ljavax/crypto/spec/SecretKeySpec;
-    .end local v11    # "stream":Ljava/io/InputStream;
     :cond_3
     :goto_3
     const-string v12, "extdata.save"
@@ -528,7 +474,6 @@
 
     if-eqz v12, :cond_4
 
-    :try_start_2
     new-instance v12, Ljava/lang/StringBuilder;
 
     invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
@@ -588,8 +533,6 @@
     move-object/from16 v0, p2
 
     invoke-static {v0, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_2
-    .catch Ljava/lang/Exception; {:try_start_2 .. :try_end_2} :catch_2
 
     .end local v9    # "path":Ljava/lang/String;
     :cond_4
@@ -647,143 +590,8 @@
 
     invoke-interface {v12}, Landroid/content/SharedPreferences$Editor;->commit()Z
 
-
     :goto_0
     return-void
-
-    :catch_0
-    move-exception v2
-
-    .local v2, "e":Ljava/lang/Exception;
-    const-string v12, "Error: Can\'t restore internal data"
-
-    const/4 v13, 0x1
-
-    invoke-static {p0, v12, v13}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
-
-    move-result-object v12
-
-    invoke-virtual {v12}, Landroid/widget/Toast;->show()V
-
-    new-instance v12, Ljava/lang/StringBuilder;
-
-    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v13, "data.save: Message: "
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    invoke-virtual {v2}, Ljava/lang/Exception;->getMessage()Ljava/lang/String;
-
-    move-result-object v13
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v12
-
-    move-object/from16 v0, p2
-
-    invoke-static {v0, v12}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    invoke-virtual {v2}, Ljava/lang/Exception;->printStackTrace()V
-
-    goto/16 :goto_2
-
-    .end local v2    # "e":Ljava/lang/Exception;
-    :catch_1
-    move-exception v2
-
-    .local v2, "e":Ljava/lang/Exception;
-    const-string v12, "Error: Can\'t restore setup data"
-
-    const/4 v13, 0x1
-
-    invoke-static {p0, v12, v13}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
-
-    move-result-object v12
-
-    invoke-virtual {v12}, Landroid/widget/Toast;->show()V
-
-    new-instance v12, Ljava/lang/StringBuilder;
-
-    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v13, "data.save: Message: "
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    invoke-virtual {v2}, Ljava/lang/Exception;->getMessage()Ljava/lang/String;
-
-    move-result-object v13
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v12
-
-    move-object/from16 v0, p2
-
-    invoke-static {v0, v12}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    invoke-virtual {v2}, Ljava/lang/Exception;->printStackTrace()V
-
-    goto/16 :goto_3
-
-    .end local v2    # "e":Ljava/lang/Exception;
-    :catch_2
-    move-exception v2
-
-    .restart local v2    # "e":Ljava/lang/Exception;
-    const-string v12, "Error: Can\'t restore external data..."
-
-    const/4 v13, 0x1
-
-    invoke-static {p0, v12, v13}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
-
-    move-result-object v12
-
-    invoke-virtual {v12}, Landroid/widget/Toast;->show()V
-
-    new-instance v12, Ljava/lang/StringBuilder;
-
-    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v13, "extdata.save: Message: "
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    invoke-virtual {v2}, Ljava/lang/Exception;->getMessage()Ljava/lang/String;
-
-    move-result-object v13
-
-    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v12
-
-    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v12
-
-    move-object/from16 v0, p2
-
-    invoke-static {v0, v12}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    invoke-virtual {v2}, Ljava/lang/Exception;->printStackTrace()V
-
-    goto/16 :goto_4
 .end method
 
 .method private static unZipIt(Ljava/io/InputStream;Ljava/lang/String;)V
