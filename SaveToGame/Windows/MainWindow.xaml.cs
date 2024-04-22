@@ -183,6 +183,11 @@ namespace SaveToGameWpf.Windows
             string apkFile = ViewModel.CurrentApk.Value;
             string saveFile = ViewModel.CurrentSave.Value;
 
+            if (ViewModel.ModID.Value.IsNullOrEmpty())
+                ViewModel.ModID.Value = "CoolMod";
+            if (ViewModel.ModVersion.Value < 1)
+                ViewModel.ModVersion.Value = 1;
+            
             _settings.ModId = ViewModel.ModID.Value;
             _settings.ModVersion = ViewModel.ModVersion.Value;
             _settings.OverwriteLegacy = ViewModel.OverwriteLegacy.Value;
