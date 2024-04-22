@@ -2,6 +2,7 @@
 using Interfaces.OrganisationItems;
 using Interfaces.ViewModels;
 using MVVM_Tools.Code.Providers;
+using SaveToGameWpf.Logic.Utils;
 using SaveToGameWpf.Resources.Localizations;
 using SharedData.Enums;
 
@@ -9,6 +10,11 @@ namespace SaveToGameWpf.Logic.ViewModels
 {
     public class MainWindowViewModel : IMainWindowViewModel
     {
+        // backing fields
+        private IProperty<string> _modId;
+        private IProperty<int> _modVersion;
+        private IProperty<bool> _overwriteLegacy;
+        
         public IProperty<bool> Working { get; }
         public IProperty<bool> OnlySave { get; }
         public IProperty<bool> SavePlusMess { get; }
@@ -17,9 +23,23 @@ namespace SaveToGameWpf.Logic.ViewModels
         public IProperty<string> PopupBoxText { get; }
         public IProperty<int> MessagesCount { get; }
 
-        public IProperty<string> ModID { get; }
-        public IProperty<int> ModVersion { get; }
-        public IProperty<bool> OverwriteLegacy { get; }
+        public IProperty<string> ModID
+        {
+            get => _modId;
+            set => _modId = value;
+        }
+
+        public IProperty<int> ModVersion
+        {
+            get => _modVersion;
+            set => _modVersion = value;
+        }
+
+        public IProperty<bool> OverwriteLegacy
+        {
+            get => _overwriteLegacy;
+            set => _overwriteLegacy = value;
+        }
 
 
         public IProperty<string> CurrentApk { get; }
