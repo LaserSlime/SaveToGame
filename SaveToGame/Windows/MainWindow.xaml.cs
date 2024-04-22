@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Shell;
 using AndroidHelper.Logic;
 using AndroidHelper.Logic.Interfaces;
@@ -71,11 +72,6 @@ namespace SaveToGameWpf.Windows
             Provider<IApktool> apktoolProvider
         )
         {
-            //TODO we should use the c# property thingies for this.
-            if (appSettings.ModId.IsNullOrEmpty())
-                appSettings.ModId = "CoolMod";
-            if(appSettings.ModVersion < 1)
-                appSettings.ModVersion = 1;
             _settings = appSettings;
             _applicationUtils = applicationUtils;
             _mainWindowProvider = mainWindowProvider;
@@ -177,7 +173,11 @@ namespace SaveToGameWpf.Windows
             string apkFile = ViewModel.CurrentApk.Value;
             string saveFile = ViewModel.CurrentSave.Value;
 
-            #region Проверка на существование файлов
+            _settings.ModId = ViewModel.ModID.Value;
+            _settings.ModVersion = ViewModel.ModVersion.Value;
+            _settings.OverwriteLegacy = ViewModel.OverwriteLegacy.Value;
+            
+            #region Checking for file existence
 
             if (string.IsNullOrEmpty(apkFile) || !File.Exists(apkFile) ||
                 (ViewModel.SavePlusMess.Value || ViewModel.OnlySave.Value) &&
@@ -481,10 +481,10 @@ namespace SaveToGameWpf.Windows
                             addSave: backupFilesAdded,
                             message: needMessage ? popupText : string.Empty,
                             messagesCount: needMessage ? messagesCount : 0,
-                            modid: _settings.ModId,
+                            modid: ViewModel.ModID.Value,
                             overwriteExisting: false,
-                            overwriteLegacy: _settings.OverwriteLegacy,
-                            version: _settings.ModVersion
+                            overwriteLegacy: ViewModel.OverwriteLegacy.Value,
+                            version: ViewModel.ModVersion.Value
                         );
 
                         manifest.MainSmaliFile.AddTextToMethod(FileResources.MainSmaliCall);
@@ -660,12 +660,11 @@ namespace SaveToGameWpf.Windows
             }
         }
 
-        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void VerifyVersionInput(object sender, TextCompositionEventArgs e)
         {
-            // Check if the entered character is a digit
-            if (!Char.IsDigit(e.Text, 0))
+            if (!char.IsDigit(e.Text, 0)) // ignore non character input for modversion
             {
-                e.Handled = true; // Ignore the input if it's not a digit
+                e.Handled = true;
             }
         }
 
