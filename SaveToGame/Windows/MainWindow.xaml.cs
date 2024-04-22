@@ -394,21 +394,28 @@ namespace SaveToGameWpf.Windows
                             resultExternalDataPath: externalBackup,
                             tempFolderProvider: tempFolderProvider
                         );
-                        ApkModifer.ParseBackup(
-                            pathToBackup: pathToSetupSave,
-                            backupType: backupType,
-                            resultInternalDataPath: internalSetupBackup,
-                            resultExternalDataPath: externalSetupBackup,
-                            tempFolderProvider: tempFolderProvider
-                        );
-
+                        
                         var fileToAssetsName = new Dictionary<string, string>
                         {
                             {internalBackup, "data.save"},
                             {externalBackup, "extdata.save"},
-                            {internalSetupBackup, "setupdata.save"},
-                            {externalSetupBackup, "extsetupdata.save"}
                         };
+                        
+                        if (!pathToSetupSave.IsNullOrEmpty())
+                        {
+                            ApkModifer.ParseBackup(
+                                pathToBackup: pathToSetupSave,
+                                backupType: backupType,
+                                resultInternalDataPath: internalSetupBackup,
+                                resultExternalDataPath: externalSetupBackup,
+                                tempFolderProvider: tempFolderProvider
+                            );
+                            
+                            fileToAssetsName.Add(internalSetupBackup, "setupdata.save");
+                            fileToAssetsName.Add(externalSetupBackup, "extsetupdata.save");
+                        }
+
+                        
 
                         foreach (var (file, assetsName) in fileToAssetsName.Enumerate())
                         {
