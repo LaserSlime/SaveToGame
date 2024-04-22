@@ -71,11 +71,6 @@ namespace SaveToGameWpf.Windows
             Provider<IApktool> apktoolProvider
         )
         {
-            if (appSettings.ModId.IsNullOrEmpty())
-            {
-                appSettings.ModId = "CoolMod";
-                viewModel.ModID.Value = "CoolMod";
-            }
             if (appSettings.ModVersion < 1)
             {
                 appSettings.ModVersion = 1;
@@ -182,8 +177,11 @@ namespace SaveToGameWpf.Windows
             string apkFile = ViewModel.CurrentApk.Value;
             string saveFile = ViewModel.CurrentSave.Value;
 
-            if (ViewModel.ModID.Value.IsNullOrEmpty())
-                ViewModel.ModID.Value = "CoolMod";
+            if (ViewModel.ModID.Value.IsNullOrEmpty()) {
+                HaveError("No Mod Id specified!", "Please specify a valid mod id.");
+                return;
+            }
+
             if (ViewModel.ModVersion.Value < 1)
                 ViewModel.ModVersion.Value = 1;
             
