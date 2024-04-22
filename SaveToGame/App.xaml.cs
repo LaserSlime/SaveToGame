@@ -200,10 +200,6 @@ namespace SaveToGameWpf
 
             if (currentVersion < 0)
                 currentVersion = 0;
-            if (latestSettings.ModId.IsNullOrEmpty())
-                latestSettings.ModId = "CoolMod";
-            if (latestSettings.ModVersion < 1)
-                latestSettings.ModVersion = 1;
 
             while (currentVersion < GlobalVariables.LatestSettingsVersion)
             {

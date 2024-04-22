@@ -72,6 +72,16 @@ namespace SaveToGameWpf.Windows
             Provider<IApktool> apktoolProvider
         )
         {
+            if (appSettings.ModId.IsNullOrEmpty())
+            {
+                appSettings.ModId = "CoolMod";
+                viewModel.ModID.Value = "CoolMod";
+            }
+            if (appSettings.ModVersion < 1)
+            {
+                appSettings.ModVersion = 1;
+                viewModel.ModVersion.Value = 1;
+            }
             _settings = appSettings;
             _applicationUtils = applicationUtils;
             _mainWindowProvider = mainWindowProvider;
