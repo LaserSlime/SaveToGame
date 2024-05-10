@@ -349,7 +349,7 @@
 
     move-result v12
 
-    const/4 v14, 0x[(mod_version)]
+    const v14, 0x[(mod_version)]
 
     if-gt v14, v12, :cond_5
 
@@ -582,7 +582,7 @@
 
     const-string v13, "version"
 
-    const/4 v14, 0x[(mod_version)]
+    const v14, 0x[(mod_version)]
 
     invoke-interface {v12, v13, v14}, Landroid/content/SharedPreferences$Editor;->putInt(Ljava/lang/String;I)Landroid/content/SharedPreferences$Editor;
 
