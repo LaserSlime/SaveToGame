@@ -131,7 +131,7 @@
     <value>Files\SavesRestoringPortable.smali;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="LegacyModCheck" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Files\LegacyModCheck_.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>Files\LegacyModCheck.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="ModCheck" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Files\ModCheck.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
