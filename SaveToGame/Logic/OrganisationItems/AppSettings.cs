@@ -8,7 +8,7 @@ namespace SaveToGameWpf.Logic.OrganisationItems
     {
         public virtual string Language { get; set; } = "EN";
 
-        public virtual BackupType BackupType { get; set; } = BackupType.Titanium;
+        public virtual BackupType BackupType { get; set; } = BackupType.Folder;
 
         public virtual string PopupMessage { get; set; } = "Modified by SaveToGame";
 
